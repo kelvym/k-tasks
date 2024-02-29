@@ -7,7 +7,7 @@ const navItems = [
   {
     key: 1,
     href: '/',
-    text: 'Home',
+    text: 'Overview',
     icon: CameraIcon,
   },
   {

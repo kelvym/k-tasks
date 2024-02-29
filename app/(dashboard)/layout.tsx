@@ -1,3 +1,4 @@
+import { Breadcrumbs } from './_components/breadcrumbs'
 import { Sidebar } from './_components/sidebar'
 
 export default function RootLayout({
@@ -10,6 +11,7 @@ export default function RootLayout({
       <Sidebar />
       <div className="p-5">
         {/* breadcrumbs */}
+        <Breadcrumbs />
         {children}
       </div>
     </div>
