@@ -9,9 +9,10 @@ export default function RootLayout({
   return (
     <div className="flex h-full">
       <Sidebar />
-      <div className="p-5">
-        {/* breadcrumbs */}
-        <Breadcrumbs />
+      <div className="p-5 flex-grow">
+        <div className="mb-4">
+          <Breadcrumbs />
+        </div>
         {children}
       </div>
     </div>
