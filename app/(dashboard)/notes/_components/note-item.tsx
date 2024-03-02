@@ -8,7 +8,7 @@ export default function NoteItem({
 }: {
   title: string
   description: string
-  id: number
+  id: string
 }) {
   return (
     <Link

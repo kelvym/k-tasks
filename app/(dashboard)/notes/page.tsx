@@ -1,24 +1,28 @@
-import { dataNotes } from '@/app/data'
 import { Header } from '@/components/header'
-import { Button } from '@/components/ui/button'
-import { PlusIcon } from 'lucide-react'
 import { Metadata } from 'next'
 import { Breadcrumbs } from '../_components/breadcrumbs'
+import HeaderAction from './_components/header-actions'
 import NoteList from './_components/note-list'
+import { auth } from '@clerk/nextjs/server'
 
 export const metadata: Metadata = {
   title: 'Notes',
 }
 
-export default function Notes() {
+export default async function Notes() {
+  const { getToken } = auth()
+
+  const dataNotes = await fetch('http://localhost:4000/v1/notes', {
+    headers: {
+      Authorization: `Bearer ${await getToken()}`,
+    },
+  }).then((res) => res.json())
+
   return (
     <>
       <Breadcrumbs />
       <Header title="Notes">
-        <Button size="sm">
-          <PlusIcon size={16} />
-          <span className="text-sm">Add Note</span>
-        </Button>
+        <HeaderAction />
       </Header>
       <NoteList list={dataNotes} />
     </>

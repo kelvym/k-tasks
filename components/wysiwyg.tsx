@@ -25,9 +25,7 @@ export default function WYSIWYG({ content, OnUpdate }: WYSIWYGProps) {
   const [editorChanged, setEditorChanged] = useState(false)
 
   const editor = useEditor({
-    onUpdate: () => {
-      setEditorChanged(true)
-    },
+    onUpdate: OnUpdate,
     extensions: [
       StarterKit,
       Table.configure({
@@ -50,17 +48,6 @@ export default function WYSIWYG({ content, OnUpdate }: WYSIWYGProps) {
       },
     },
   })
-
-  const EditorText = useDebounce({
-    value: editor?.getText() || '',
-    milliseconds: 1000,
-  })
-
-  useEffect(() => {
-    if (EditorText && editorChanged) {
-      OnUpdate(EditorText)
-    }
-  }, [EditorText, OnUpdate, editorChanged])
 
   return (
     <>
