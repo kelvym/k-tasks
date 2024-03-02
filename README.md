@@ -1,6 +1,6 @@
 # Study
 
-[![Node.js CI](https://github.com/kelvym/k-tasks/actions/workflows/node.js.yml/badge.svg)](https://github.com/kelvym/k-tasks/actions/workflows/node.js.yml)
+[![Node.js CI](https://github.com/kelvym/k-tasks-front/actions/workflows/node.js.yml/badge.svg)](https://github.com/kelvym/k-tasks-front/actions/workflows/node.js.yml)
 
 ## Getting Started
 
