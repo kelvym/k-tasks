@@ -4,6 +4,7 @@ import { Breadcrumbs } from '../_components/breadcrumbs'
 import HeaderAction from './_components/header-actions'
 import NoteList from './_components/note-list'
 import { auth } from '@clerk/nextjs/server'
+import { Content } from '@/components/ui/content'
 
 export const metadata: Metadata = {
   title: 'Notes',
@@ -24,7 +25,9 @@ export default async function Notes() {
       <Header title="Notes">
         <HeaderAction />
       </Header>
-      <NoteList list={dataNotes} />
+      <Content>
+        <NoteList list={dataNotes} />
+      </Content>
     </>
   )
 }

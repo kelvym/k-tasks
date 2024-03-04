@@ -21,13 +21,14 @@ export const NavItem = ({ href, icon: Icon, text }: NavItemProps) => {
           'bg-primary': pathname === href,
         })}
       >
-        <div className="mr-4">
-          <Icon size={20} color={pathname === href ? '#fff' : '#ebebf599'} />
-        </div>
+        <Icon size={20} color={pathname === href ? '#fff' : '#ebebf599'} />
         <span
-          className={cn('text-foreground text-sm leading-none', {
-            'text-white': pathname === href,
-          })}
+          className={cn(
+            'ml-4 text-foreground text-sm leading-none hidden md:block',
+            {
+              'text-white': pathname === href,
+            }
+          )}
         >
           {text}
         </span>
