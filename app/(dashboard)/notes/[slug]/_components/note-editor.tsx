@@ -1,26 +1,26 @@
 'use client'
 
+import { updateNote } from '@/api/notes'
 import WYSIWYG from '@/components/wysiwyg'
-import { useParams } from 'next/navigation'
+import { request } from '@/lib/request'
 import { useAuth } from '@clerk/nextjs'
-import { useDebounceCallback } from 'usehooks-ts'
 import { EditorEvents } from '@tiptap/react'
+import { useParams } from 'next/navigation'
+import { useDebounceCallback } from 'usehooks-ts'
 
 export default function NoteEditor({ text }: { text: string }) {
-  const { getToken } = useAuth()
   const params = useParams()
+  const { getToken } = useAuth()
 
   const OnUpdate = async (value: EditorEvents['update']) => {
     const text = value.editor.getText()
 
-    await fetch(`http://localhost:4000/v1/notes/${params.slug}/text`, {
-      body: JSON.stringify({ text }),
-      method: 'PUT',
-      headers: {
-        Authorization: `Bearer ${await getToken()}`,
-        'Content-type': 'application/json; charset=UTF-8',
-      },
-    }).then((res) => res.json())
+    if (typeof params.slug === 'string') {
+      await request({
+        config: updateNote({ id: params.slug, text }),
+        auth: await getToken(),
+      })
+    }
   }
   const debounced = useDebounceCallback(OnUpdate, 1000)
 

@@ -1,22 +1,17 @@
+import { getNote } from '@/api/notes'
 import { Header } from '@/components/header'
-import type { Metadata } from 'next'
+import { request } from '@/lib/request'
+import { auth } from '@clerk/nextjs/server'
 import { Breadcrumbs } from '../../_components/breadcrumbs'
 import NoteEditor from './_components/note-editor'
-import { auth } from '@clerk/nextjs/server'
 
 export default async function NotesSlug({ params }: { params: any }) {
   const { getToken } = auth()
 
-  const dataNote = await fetch(
-    'http://localhost:4000/v1/notes/' + params.slug,
-    {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${await getToken()}`,
-      },
-    }
-  ).then((res) => res.json())
-
+  const dataNote = await request({
+    config: getNote({ id: params.slug }),
+    auth: await getToken(),
+  })
   const { text, title } = dataNote
 
   return (

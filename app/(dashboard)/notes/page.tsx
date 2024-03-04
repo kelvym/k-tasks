@@ -1,10 +1,12 @@
+import { getAll } from '@/api/notes'
 import { Header } from '@/components/header'
+import { Content } from '@/components/ui/content'
 import { Metadata } from 'next'
 import { Breadcrumbs } from '../_components/breadcrumbs'
 import HeaderAction from './_components/header-actions'
 import NoteList from './_components/note-list'
+import { request } from '@/lib/request'
 import { auth } from '@clerk/nextjs/server'
-import { Content } from '@/components/ui/content'
 
 export const metadata: Metadata = {
   title: 'Notes',
@@ -13,11 +15,7 @@ export const metadata: Metadata = {
 export default async function Notes() {
   const { getToken } = auth()
 
-  const dataNotes = await fetch('http://localhost:4000/v1/notes', {
-    headers: {
-      Authorization: `Bearer ${await getToken()}`,
-    },
-  }).then((res) => res.json())
+  const dataNotes = await request({ config: getAll(), auth: await getToken() })
 
   return (
     <>
@@ -26,7 +24,7 @@ export default async function Notes() {
         <HeaderAction />
       </Header>
       <Content>
-        <NoteList list={dataNotes} />
+        <NoteList list={dataNotes || []} />
       </Content>
     </>
   )
