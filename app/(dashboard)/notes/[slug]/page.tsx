@@ -1,26 +1,24 @@
 import { getNote } from '@/api/notes'
-import { Header } from '@/components/header'
-import { request } from '@/lib/request'
 import { auth } from '@clerk/nextjs/server'
-import { Breadcrumbs } from '../../_components/breadcrumbs'
-import NoteEditor from './_components/note-editor'
+import {
+  HydrationBoundary,
+  QueryClient,
+  dehydrate,
+} from '@tanstack/react-query'
+import { Note } from './_components/note'
 
 export default async function NotesSlug({ params }: { params: any }) {
   const { getToken } = auth()
+  const queryClient = new QueryClient()
 
-  const dataNote = await request({
-    config: getNote({ id: params.slug }),
-    auth: await getToken(),
+  await queryClient.prefetchQuery({
+    queryKey: ['notes', params.slug],
+    queryFn: () => getNote({ id: params.slug, auth: getToken() }),
   })
-  const { text, title } = dataNote
 
   return (
-    <>
-      <Breadcrumbs title={title} />
-      <Header title={title}></Header>
-      <div className="flex justify-center pb-14">
-        <NoteEditor text={text} />
-      </div>
-    </>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <Note id={params.slug} />
+    </HydrationBoundary>
   )
 }

@@ -3,11 +3,11 @@ import Link from 'next/link'
 
 export default function NoteItem({
   title,
-  description,
+  text,
   id,
 }: {
   title: string
-  description: string
+  text: string
   id: string
 }) {
   return (
@@ -22,7 +22,7 @@ export default function NoteItem({
         <span className="font-semibold text-dark group-hover:text-light text-base mb-3 block">
           {title}
         </span>
-        <p className="text-sm">{description}</p>
+        <p className="text-sm">{text}</p>
       </div>
     </Link>
   )

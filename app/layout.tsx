@@ -1,9 +1,8 @@
 import { ClerkProvider } from '@clerk/nextjs'
 import type { Metadata } from 'next'
-import { Roboto_Flex } from 'next/font/google'
 import './globals.css'
-
-const robotoFlex = Roboto_Flex({ subsets: ['latin'] })
+import ReactQueryProvider from './react-query-provider'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 export const metadata: Metadata = {
   title: 'k-tasts',
@@ -18,7 +17,12 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={robotoFlex.className}>{children}</body>
+        <body>
+          <ReactQueryProvider>
+            <ReactQueryDevtools initialIsOpen={false} />
+            {children}
+          </ReactQueryProvider>
+        </body>
       </html>
     </ClerkProvider>
   )
