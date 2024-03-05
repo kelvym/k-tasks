@@ -47,16 +47,20 @@ export default function NoteTitle({ title }: { title: string }) {
 
   return (
     <div className="mb-5 w-full md:w-[65ch]">
-      <Content>
-        <input
-          type="text"
-          value={inputTitle}
-          onChange={(e) => {
-            setInputTitle(e.target.value)
-          }}
-          className="bg-transparent"
-        />
-      </Content>
+      <label
+        htmlFor="note-title"
+        className="block text-base font-semibold mb-2 text-light"
+      >
+        Title
+      </label>
+      <input
+        type="text"
+        value={inputTitle}
+        onChange={(e) => {
+          setInputTitle(e.target.value)
+        }}
+        className="bg-transparent-secondary p-8 w-full"
+      />
     </div>
   )
 }

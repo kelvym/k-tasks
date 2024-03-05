@@ -32,9 +32,7 @@ export default async function Notes() {
         <Header title="Notes">
           <HeaderAction />
         </Header>
-        <Content>
-          <NoteList />
-        </Content>
+        <NoteList />
       </HydrationBoundary>
     </>
   )
