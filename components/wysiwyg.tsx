@@ -1,20 +1,14 @@
-import {
-  BubbleMenu,
-  EditorContent,
-  FloatingMenu,
-  useEditor,
-} from '@tiptap/react'
+import { cn } from '@/lib/utils'
+import Image from '@tiptap/extension-image'
+import Placeholder from '@tiptap/extension-placeholder'
 import Table from '@tiptap/extension-table'
 import TableCell from '@tiptap/extension-table-cell'
 import TableHeader from '@tiptap/extension-table-header'
 import TableRow from '@tiptap/extension-table-row'
-import Image from '@tiptap/extension-image'
+import { BubbleMenu, EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { BoldIcon, ItalicIcon, StrikethroughIcon } from 'lucide-react'
-import { cn } from '@/lib/utils'
-import { useDebounce } from '@/hooks/debounce'
-import { useEffect, useState } from 'react'
-import Placeholder from '@tiptap/extension-placeholder'
+import { useState } from 'react'
 
 type WYSIWYGProps = {
   content: string
@@ -22,8 +16,6 @@ type WYSIWYGProps = {
 }
 
 export default function WYSIWYG({ content, OnUpdate }: WYSIWYGProps) {
-  const [editorChanged, setEditorChanged] = useState(false)
-
   const editor = useEditor({
     onUpdate: OnUpdate,
     extensions: [
@@ -44,7 +36,7 @@ export default function WYSIWYG({ content, OnUpdate }: WYSIWYGProps) {
     editorProps: {
       attributes: {
         class:
-          'prose prose-neutral prose-sm sm:prose-base p-5 focus:outline-none bg-background w-full h-full',
+          'prose prose-neutral prose-sm sm:prose-base p-5 focus:outline-none bg-background-secondary w-full h-full',
       },
     },
   })

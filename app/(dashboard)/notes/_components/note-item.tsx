@@ -1,4 +1,4 @@
-import { FileTypeIcon } from 'lucide-react'
+import { FileTypeIcon, MoreVerticalIcon, XIcon } from 'lucide-react'
 import Link from 'next/link'
 
 export default function NoteItem({
@@ -13,16 +13,18 @@ export default function NoteItem({
   return (
     <Link
       href={`/notes/${id}`}
-      className="group transition-all h-52 overflow-hidden grow relative rounded-sm lg:max-w-52 md:basis-1/4 basis-1/3 bg-light hover:bg-background"
+      className="group transition-all overflow-hidden grow relative rounded-sm lg:max-w-52 md:basis-1/4 basis-1/3 bg-light hover:bg-background relative"
     >
-      <div className="hidden group-hover:flex absolute w-full h-full justify-center items-center flex-col gap-2">
-        <FileTypeIcon size={28} color="#fff" />
-      </div>
       <div className="p-5">
-        <span className="font-semibold text-dark group-hover:text-light text-base mb-3 block">
-          {title}
-        </span>
-        <p className="text-sm">{text}</p>
+        <div className="mb-3 flex justify-between gap-3">
+          <span className="font-semibold leading-none text-dark group-hover:text-light text-base block">
+            {title}
+          </span>
+          <XIcon size={28} color="#c11111" className="w-7 shrink-0" />
+        </div>
+        <p className="text-xs break-words h-40 overflow-hidden text-foreground">
+          {text}
+        </p>
       </div>
     </Link>
   )
