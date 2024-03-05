@@ -75,3 +75,26 @@ export const updateNote = async ({
 
   return json
 }
+
+export const updateTitle = async ({
+  id,
+  title,
+  auth,
+}: {
+  id: string
+  title: string
+  auth: Promise<string | null>
+}) => {
+  const response = await fetch(
+    'http://localhost:4000/v1/notes/' + id + '/title',
+    createOptions({ auth: await auth, method: 'PUT', body: { title } })
+  )
+
+  if (!response.ok) {
+    throw new Error('Network response error')
+  }
+
+  const json = await response.json()
+
+  return json
+}
