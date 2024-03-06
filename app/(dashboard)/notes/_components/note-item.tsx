@@ -13,7 +13,7 @@ export default function NoteItem({
   return (
     <Link
       href={`/notes/${id}`}
-      className="group transition-all overflow-hidden grow relative rounded-sm lg:max-w-52 md:basis-1/4 basis-1/3 bg-light hover:bg-background-secondary"
+      className="group transition-all overflow-hidden relative rounded-sm basis-1/3-gap-5 md:basis-1/3-gap-5 lg:max-w-52 bg-light hover:bg-background-secondary"
     >
       <div className="p-5">
         <div className="mb-3 flex justify-between gap-3">

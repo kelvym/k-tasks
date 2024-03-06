@@ -22,7 +22,7 @@ export default function NoteList() {
   }
 
   return (
-    <div className="flex gap-5 flex-wrap justify-center">
+    <div className="flex gap-5 flex-wrap">
       {data?.map(({ _id, title, text }) => (
         <NoteItem title={title} text={text} id={_id} key={_id} />
       ))}

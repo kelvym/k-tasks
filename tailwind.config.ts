@@ -56,6 +56,10 @@ const config = {
           foreground: 'hsl(var(--card-foreground))',
         },
       },
+      flexBasis: {
+        asd: '1px',
+        '1/3-gap-5': 'calc(33.3% - (2/3 * 1.25rem))',
+      },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',

@@ -36,7 +36,7 @@ export default function WYSIWYG({ content, OnUpdate }: WYSIWYGProps) {
     editorProps: {
       attributes: {
         class:
-          'prose prose-neutral prose-sm sm:prose-base p-8 focus:outline-none bg-background-secondary w-full h-full',
+          'prose prose-neutral prose-sm sm:prose-base p-8 focus:outline-none bg-background-secondary w-full h-full max-w-none break-all',
       },
     },
   })

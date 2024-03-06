@@ -2,6 +2,7 @@
 
 import { updateTitle } from '@/api/notes'
 import { Content } from '@/components/ui/content'
+import { Input } from '@/components/ui/input'
 import { useAuth } from '@clerk/nextjs'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useParams } from 'next/navigation'
@@ -46,20 +47,21 @@ export default function NoteTitle({ title }: { title: string }) {
   }, [inputTitle])
 
   return (
-    <div className="mb-5 w-full md:w-[65ch]">
+    <div className="mb-5 w-full">
       <label
         htmlFor="note-title"
         className="block text-base font-semibold mb-2 text-light"
       >
         Title
       </label>
-      <input
+      <Input
+        placeholder="Write the title here..."
         type="text"
         value={inputTitle}
         onChange={(e) => {
           setInputTitle(e.target.value)
         }}
-        className="bg-transparent-secondary p-8 w-full"
+        className="bg-background-secondary p-8 w-full"
       />
     </div>
   )

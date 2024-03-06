@@ -29,8 +29,10 @@ export const Note = ({ id }: { id: string }) => {
       <Breadcrumbs title={data?.title} />
       <Header title="Edit"></Header>
       <div className="flex flex-col justify-center items-center pb-14">
-        <NoteTitle title={data?.title || ''} />
-        <NoteEditor text={data?.text || ''} />
+        <div className="xl:max-w-6xl lg:max-w-2xl w-full">
+          <NoteTitle title={data?.title || ''} />
+          <NoteEditor text={data?.text || ''} />
+        </div>
       </div>
     </>
   )
