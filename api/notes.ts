@@ -98,3 +98,24 @@ export const updateTitle = async ({
 
   return json
 }
+
+export const remove = async ({
+  id,
+  auth,
+}: {
+  id: string
+  auth: Promise<string | null>
+}) => {
+  const response = await fetch(
+    'http://localhost:4000/v1/notes/' + id,
+    createOptions({ auth: await auth, method: 'DELETE' })
+  )
+
+  if (!response.ok) {
+    throw new Error('Network response error')
+  }
+
+  const json = await response.json()
+
+  return json
+}
