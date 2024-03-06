@@ -1,32 +1,41 @@
 'use client'
 
+import { create } from '@/api/notes'
 import { Button } from '@/components/ui/button'
 import { useAuth } from '@clerk/nextjs'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { PlusIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 export default function HeaderAction() {
-  const { getToken } = useAuth()
+  const [loading, setLoading] = useState(false)
+
   const router = useRouter()
 
-  const onClick = async () => {
-    const noteCreated = await fetch('http://localhost:4000/v1/notes', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${await getToken()}`,
-      },
-    }).then((res) => res.json())
+  const queryClient = useQueryClient()
+  const { getToken } = useAuth()
 
-    router.push(`/notes/${noteCreated.id}`)
-  }
+  const createNote = useMutation({
+    mutationFn: () => {
+      return create({ auth: getToken() })
+    },
+    onSuccess: ({ id }: { id: string }) => {
+      queryClient.invalidateQueries({ queryKey: ['notes'] })
+      router.push(`/notes/${id}`)
+    },
+  })
+
   return (
     <Button
+      loading={loading}
       size="sm"
-      onClick={async () => {
-        const noteCreated = await onClick()
+      onClick={() => {
+        setLoading(true)
+        createNote.mutate()
       }}
+      icon={PlusIcon}
     >
-      <PlusIcon size={16} />
       <span className="text-sm">Add Note</span>
     </Button>
   )
