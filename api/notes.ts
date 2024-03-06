@@ -119,3 +119,18 @@ export const remove = async ({
 
   return json
 }
+
+export const create = async ({ auth }: { auth: Promise<string | null> }) => {
+  const response = await fetch(
+    'http://localhost:4000/v1/notes/',
+    createOptions({ auth: await auth, method: 'POST' })
+  )
+
+  if (!response.ok) {
+    throw new Error('Network response error')
+  }
+
+  const json = await response.json()
+
+  return json
+}
