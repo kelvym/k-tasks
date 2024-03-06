@@ -30,7 +30,7 @@ export default function NoteEditor({ text }: { text: string }) {
   })
 
   const OnUpdate = async (value: EditorEvents['update']) => {
-    const text = value.editor.getText()
+    const text = value.editor.getHTML()
 
     if (typeof params.slug === 'string') {
       mutateNote.mutate({ id: params.slug, text })
