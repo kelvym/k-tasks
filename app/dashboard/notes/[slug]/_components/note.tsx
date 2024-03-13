@@ -1,7 +1,6 @@
 'use client'
 
 import { getNote } from '@/api/notes'
-import { Breadcrumbs } from '@/app/(dashboard)/_components/breadcrumbs'
 import { Header } from '@/components/header'
 import { NoteSchema } from '@/schemas/notes-schema'
 import { useAuth } from '@clerk/nextjs'
@@ -9,6 +8,7 @@ import { useQuery } from '@tanstack/react-query'
 import { z } from 'zod'
 import NoteEditor from './note-editor'
 import NoteTitle from './note-title'
+import { Breadcrumbs } from '@/app/dashboard/_components/breadcrumbs'
 
 type NoteRequest = z.infer<typeof NoteSchema>
 
