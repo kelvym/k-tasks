@@ -17,13 +17,15 @@ export default function NoteEditor({ text }: { text: string }) {
     mutationFn: ({ id, text }: { id: string; text: string }) =>
       updateNote({ id, text, auth: getToken() }),
     onSuccess: (_, { id, text }) => {
-      queryClient.setQueryData(['notes', id], (oldData: any) =>
-        oldData
-          ? {
-              ...oldData,
-              text,
-            }
-          : oldData
+      queryClient.setQueryData(
+        ['notes', id],
+        (oldData: { id: string; text: string }) =>
+          oldData
+            ? {
+                ...oldData,
+                text,
+              }
+            : oldData
       )
       queryClient.invalidateQueries({ queryKey: ['notes'] })
     },

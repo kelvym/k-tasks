@@ -8,10 +8,10 @@ import TableRow from '@tiptap/extension-table-row'
 import { BubbleMenu, EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { BoldIcon, ItalicIcon, StrikethroughIcon } from 'lucide-react'
-import { useState } from 'react'
 
 type WYSIWYGProps = {
   content: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   OnUpdate: (prop: any) => void
 }
 

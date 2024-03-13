@@ -1,7 +1,6 @@
 'use client'
 
 import { updateTitle } from '@/api/notes'
-import { Content } from '@/components/ui/content'
 import { Input } from '@/components/ui/input'
 import { useAuth } from '@clerk/nextjs'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
@@ -20,13 +19,15 @@ export default function NoteTitle({ title }: { title: string }) {
     mutationFn: ({ id, title }: { id: string; title: string }) =>
       updateTitle({ id, title, auth: getToken() }),
     onSuccess: (_, { id, title }) => {
-      queryClient.setQueryData(['notes', id], (oldData: any) =>
-        oldData
-          ? {
-              ...oldData,
-              title,
-            }
-          : oldData
+      queryClient.setQueryData(
+        ['notes', id],
+        (oldData: { id: string; title: string }) =>
+          oldData
+            ? {
+                ...oldData,
+                title,
+              }
+            : oldData
       )
       queryClient.invalidateQueries({ queryKey: ['notes'] })
     },

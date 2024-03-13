@@ -7,7 +7,11 @@ import {
 } from '@tanstack/react-query'
 import { Note } from './_components/note'
 
-export default async function NotesSlug({ params }: { params: any }) {
+export default async function NotesSlug({
+  params,
+}: {
+  params: { slug: string }
+}) {
   const { getToken } = auth()
   const queryClient = new QueryClient()
 

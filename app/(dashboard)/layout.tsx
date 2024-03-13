@@ -1,4 +1,3 @@
-import { Breadcrumbs } from './_components/breadcrumbs'
 import { Sidebar } from './_components/sidebar'
 
 export default function RootLayout({

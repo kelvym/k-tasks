@@ -1,9 +1,6 @@
 import { cn } from '@/lib/utils'
 
-function Loading({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) {
+function Loading({ className }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       className={cn(

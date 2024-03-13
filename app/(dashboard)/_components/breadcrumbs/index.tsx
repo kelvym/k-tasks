@@ -14,7 +14,7 @@ export const Breadcrumbs = ({ title }: { title?: string }) => {
     pathname: string
     title?: string
   }) => {
-    let paths = pathname.split('/').filter((path) => path !== '')
+    const paths = pathname.split('/').filter((path) => path !== '')
 
     paths.unshift('')
 
