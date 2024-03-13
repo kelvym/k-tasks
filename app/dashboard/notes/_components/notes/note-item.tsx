@@ -42,7 +42,7 @@ export default function NoteItem({ title, id }: { title: string; id: string }) {
         </Button>
       )}
       {isLoading && <Loading />}
-      <Link href={`/notes/${id}`} className="block pt-7 h-full">
+      <Link href={`/dashboard/notes/${id}`} className="block pt-7 h-full">
         <div className="p-5 h-full flex flex-col items-center">
           <span className="font-semibold text-dark group-hover:text-light text-base block break-all">
             {title}

@@ -30,7 +30,7 @@ export const Breadcrumbs = ({ title }: { title?: string }) => {
         return (
           <div key={key} className="capitalize text-xs flex items-center">
             <Link
-              href={`/${path}`}
+              href={`/dashboard/${path}`}
               className={cn('truncate max-w-36 inline-block leading-none', {
                 'text-white': key === listPaths.length - 1,
               })}

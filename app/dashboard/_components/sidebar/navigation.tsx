@@ -6,19 +6,19 @@ import { StickyNoteIcon, ListTodoIcon, HomeIcon } from 'lucide-react'
 const navItems = [
   {
     key: 1,
-    href: '/',
+    href: '/dashboard',
     text: 'Overview',
     icon: HomeIcon,
   },
   {
     key: 2,
-    href: '/notes',
+    href: '/dashboard/notes',
     text: 'Notes',
     icon: StickyNoteIcon,
   },
   {
     key: 3,
-    href: '/contact',
+    href: '/dashboard/contact',
     text: 'Contact',
     icon: ListTodoIcon,
   },
