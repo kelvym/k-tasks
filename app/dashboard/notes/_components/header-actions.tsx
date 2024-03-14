@@ -22,7 +22,7 @@ export default function HeaderAction() {
     },
     onSuccess: ({ id }: { id: string }) => {
       queryClient.invalidateQueries({ queryKey: ['notes'] })
-      router.push(`/notes/${id}`)
+      router.push(`/dashboard/notes/${id}`)
     },
   })
 
