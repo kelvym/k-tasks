@@ -18,8 +18,8 @@ const navItems = [
   },
   {
     key: 3,
-    href: '/dashboard/contact',
-    text: 'Contact',
+    href: '/dashboard/todo',
+    text: 'To-do',
     icon: ListTodoIcon,
   },
 ]
