@@ -16,8 +16,6 @@ export const Breadcrumbs = ({ title }: { title?: string }) => {
   }) => {
     const paths = pathname.split('/').filter((path) => path !== '')
 
-    paths.unshift('')
-
     if (title) paths.splice(paths.length - 1, 1, title)
 
     return paths
@@ -30,12 +28,12 @@ export const Breadcrumbs = ({ title }: { title?: string }) => {
         return (
           <div key={key} className="capitalize text-xs flex items-center">
             <Link
-              href={`/dashboard/${path}`}
+              href={`/${path}`}
               className={cn('truncate max-w-36 inline-block leading-none', {
                 'text-white': key === listPaths.length - 1,
               })}
             >
-              {path ? path : 'Overview'}
+              {path}
             </Link>
 
             {listPaths.length - 1 !== key && (
