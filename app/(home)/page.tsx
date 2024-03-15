@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 const links = [
   {
-    href: '/sign-in?test=true',
+    href: '/dashboard?test=true',
     text: (
       <>
         Kelvym
