@@ -2,6 +2,7 @@
 
 import { updateTitle } from '@/api/notes'
 import { Input } from '@/components/ui/input'
+import { useSavingLoading } from '@/store/saving-loading'
 import { useAuth } from '@clerk/nextjs'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useParams } from 'next/navigation'
@@ -14,6 +15,7 @@ export default function NoteTitle({ title }: { title: string }) {
   const queryClient = useQueryClient()
   const params = useParams()
   const { getToken } = useAuth()
+  const changeSavingLoading = useSavingLoading((state) => state.changeStatus)
 
   const mutateNote = useMutation({
     mutationFn: ({ id, title }: { id: string; title: string }) =>
@@ -30,6 +32,7 @@ export default function NoteTitle({ title }: { title: string }) {
             : oldData
       )
       queryClient.invalidateQueries({ queryKey: ['notes'] })
+      changeSavingLoading(false)
     },
   })
 
@@ -40,10 +43,14 @@ export default function NoteTitle({ title }: { title: string }) {
     }
     const timeoutId = setTimeout(() => {
       if (typeof params.slug === 'string') {
+        changeSavingLoading(true)
         mutateNote.mutate({ id: params.slug, title: inputTitle })
       }
     }, 1000)
-    return () => clearTimeout(timeoutId)
+    return () => {
+      clearTimeout(timeoutId)
+      changeSavingLoading(false)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputTitle])
 

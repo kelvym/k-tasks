@@ -26,6 +26,9 @@ export default function NoteList() {
       {data?.map(({ _id, title }) => (
         <NoteItem title={title} id={_id} key={_id} />
       ))}
+      {data?.length === 0 && (
+        <div className="w-full text-sm">Nothing here. Add your first note</div>
+      )}
     </div>
   )
 }

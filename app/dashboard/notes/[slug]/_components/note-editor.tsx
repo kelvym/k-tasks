@@ -2,6 +2,7 @@
 
 import { updateNote } from '@/api/notes'
 import WYSIWYG from '@/components/wysiwyg'
+import { useSavingLoading } from '@/store/saving-loading'
 import { useAuth } from '@clerk/nextjs'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { EditorEvents } from '@tiptap/react'
@@ -12,6 +13,7 @@ export default function NoteEditor({ text }: { text: string }) {
   const queryClient = useQueryClient()
   const params = useParams()
   const { getToken } = useAuth()
+  const changeSavingLoading = useSavingLoading((state) => state.changeStatus)
 
   const mutateNote = useMutation({
     mutationFn: ({ id, text }: { id: string; text: string }) =>
@@ -28,6 +30,7 @@ export default function NoteEditor({ text }: { text: string }) {
             : oldData
       )
       queryClient.invalidateQueries({ queryKey: ['notes'] })
+      changeSavingLoading(false)
     },
   })
 
@@ -35,6 +38,7 @@ export default function NoteEditor({ text }: { text: string }) {
     const text = value.editor.getHTML()
 
     if (typeof params.slug === 'string') {
+      changeSavingLoading(true)
       mutateNote.mutate({ id: params.slug, text })
     }
   }
