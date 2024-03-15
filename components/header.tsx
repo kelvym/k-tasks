@@ -1,4 +1,4 @@
-import { Badge } from './ui/badge'
+import { BadgeSaving } from './badge-saving'
 
 type HeaderProps = {
   children?: React.ReactNode
@@ -10,7 +10,7 @@ export const Header = ({ children, title }: HeaderProps) => {
     <div className="flex justify-between w-full mb-8 mt-10">
       <div className="flex items-center gap-4">
         <h1 className="text-2xl text-header">{title}</h1>
-        <Badge loading={true}>Saving...</Badge>
+        <BadgeSaving />
       </div>
       {children}
     </div>
