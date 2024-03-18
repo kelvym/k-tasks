@@ -7,14 +7,16 @@ import { usePathname } from 'next/navigation'
 export const Breadcrumbs = ({ title }: { title?: string }) => {
   const pathname = usePathname()
 
-  const extractPaths = ({
-    pathname,
-    title,
-  }: {
-    pathname: string
-    title?: string
-  }) => {
-    const paths = pathname.split('/').filter((path) => path !== '')
+  const pathSplitted = pathname.split('/')
+
+  pathSplitted.shift()
+
+  const buildFullPath = (index: number) => {
+    return pathSplitted.slice(0, index + 1).join('/')
+  }
+
+  const extractPaths = ({ title }: { pathname: string; title?: string }) => {
+    const paths = pathSplitted
 
     if (title) paths.splice(paths.length - 1, 1, title)
 
@@ -28,7 +30,7 @@ export const Breadcrumbs = ({ title }: { title?: string }) => {
         return (
           <div key={key} className="capitalize text-xs flex items-center">
             <Link
-              href={`/${path}`}
+              href={`/${buildFullPath(key)}`}
               className={cn('truncate max-w-36 inline-block leading-none', {
                 'text-white': key === listPaths.length - 1,
               })}
