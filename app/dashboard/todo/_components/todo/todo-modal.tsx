@@ -1,6 +1,6 @@
 'use client'
 
-import { create } from '@/api/todo'
+import { create, update } from '@/api/todo'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -15,13 +15,19 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { TodoSchema } from '@/schemas/todo-schema'
 import { useAuth } from '@clerk/nextjs'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -31,7 +37,7 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 type TodoModalEditProps = {
-  _id: string
+  id: string
   type: string
   title: string
   description: string
@@ -42,8 +48,9 @@ type TodoModalEditProps = {
 type TodoModalAddProps = {
   trigger: React.ReactNode
 }
-
-const formSchema = TodoSchema.pick({
+const formSchema = TodoSchema.extend({
+  level: z.string().max(1),
+}).pick({
   type: true,
   title: true,
   description: true,
@@ -55,14 +62,31 @@ export function TodoModal(props: TodoModalEditProps | TodoModalAddProps) {
   const queryClient = useQueryClient()
   const { getToken } = useAuth()
 
-  const createTodo = useMutation({
+  const createOrUpdateTodo = useMutation({
     mutationFn: ({
       type,
       title,
       description,
       level,
     }: z.infer<typeof formSchema>) => {
-      return create({ auth: getToken(), type, title, description, level })
+      if ('id' in props) {
+        return update({
+          id: props.id,
+          auth: getToken(),
+          type,
+          title,
+          description,
+          level: parseInt(level),
+        })
+      } else {
+        return create({
+          auth: getToken(),
+          type,
+          title,
+          description,
+          level: parseInt(level),
+        })
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['todo'] })
@@ -76,13 +100,12 @@ export function TodoModal(props: TodoModalEditProps | TodoModalAddProps) {
       type: 'type' in props ? props.type : '',
       title: 'title' in props ? props.title : '',
       description: 'description' in props ? props.description : '',
-      level: 'level' in props ? props.level : 1,
+      level: 'level' in props ? props.level.toString() : '1',
     },
   })
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    createTodo.mutate(values)
-    console.log(values)
+    createOrUpdateTodo.mutate(values)
   }
 
   return (
@@ -97,24 +120,48 @@ export function TodoModal(props: TodoModalEditProps | TodoModalAddProps) {
         </DialogHeader>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <FormField
-              control={form.control}
-              name="type"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Type</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Exercise, Learning, Work, etc."
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormDescription>Max 15 characters</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <div className="flex gap-5">
+              <FormField
+                control={form.control}
+                name="type"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Type</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Exercise, Learning, Work, etc."
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="level"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Level</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <SelectTrigger className="">
+                        <SelectValue placeholder="How hard it is?" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="1">Easy</SelectItem>
+                        <SelectItem value="2">Normal</SelectItem>
+                        <SelectItem value="3">Hard</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
             <FormField
               control={form.control}
               name="title"
@@ -124,7 +171,6 @@ export function TodoModal(props: TodoModalEditProps | TodoModalAddProps) {
                   <FormControl>
                     <Input placeholder="Walk 30 min/day" {...field} />
                   </FormControl>
-                  <FormDescription>Max 60 characters</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -140,19 +186,6 @@ export function TodoModal(props: TodoModalEditProps | TodoModalAddProps) {
                       placeholder="Walk around the park for 30 minutes"
                       {...field}
                     />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="level"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Level</FormLabel>
-                  <FormControl>
-                    <Input placeholder="1" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

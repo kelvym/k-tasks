@@ -23,8 +23,15 @@ export function TodoList() {
 
   return (
     <div className="flex gap-5 flex-wrap">
-      {data?.map(({ _id, title }) => (
-        <TodoItem title={title} id={_id} key={_id} />
+      {data?.map(({ _id, title, description, level, type }) => (
+        <TodoItem
+          key={_id}
+          type={type}
+          title={title}
+          id={_id}
+          description={description}
+          level={level}
+        />
       ))}
       {data?.length === 0 && (
         <div className="w-full text-sm">

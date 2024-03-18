@@ -1,6 +1,5 @@
 import { remove } from '@/api/todo'
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import { Loading } from '@/components/ui/loading'
 import { cn } from '@/lib/utils'
 import { useAuth } from '@clerk/nextjs'
@@ -9,7 +8,21 @@ import { Trash2Icon } from 'lucide-react'
 import { useState } from 'react'
 import { TodoModal } from './todo-modal'
 
-export function TodoItem({ title, id }: { title: string; id: string }) {
+type TodoItemProps = {
+  id: string
+  title: string
+  description: string
+  level: number
+  type: string
+}
+
+export function TodoItem({
+  id,
+  title,
+  description,
+  level,
+  type,
+}: TodoItemProps) {
   const queryClient = useQueryClient()
   const { getToken } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
@@ -48,16 +61,20 @@ export function TodoItem({ title, id }: { title: string; id: string }) {
         </Button>
       )}
       {isLoading && <Loading />}
-      <Dialog>
-        <DialogTrigger className="block pt-7 h-full">
+      <TodoModal
+        title={title}
+        id={id}
+        description={description}
+        level={level}
+        type={type}
+        trigger={
           <div className="p-5 h-full flex flex-col items-center">
             <span className="font-semibold text-dark group-hover:text-light text-base block break-all">
               {!isLoading && title}
             </span>
           </div>
-        </DialogTrigger>
-        <TodoModal />
-      </Dialog>
+        }
+      />
     </div>
   )
 }

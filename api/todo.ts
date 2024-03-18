@@ -13,7 +13,12 @@ export const getAll = async ({ auth }: { auth: Promise<string | null> }) => {
   }
 
   const json = await response.json()
-  return z.array(TodoSchema).parse(json)
+  try {
+    return z.array(TodoSchema).parse(json)
+  } catch (error) {
+    console.error(error)
+    throw new Error('Invalid response')
+  }
 }
 
 export const remove = async ({
@@ -50,6 +55,39 @@ export const create = async ({ auth, ...props }: createProps) => {
   const response = await fetch(
     '/api/v1/todo/',
     createOptions({ auth: await auth, method: 'POST', body: props })
+  )
+
+  if (!response.ok) {
+    throw new Error('Network response error')
+  }
+
+  const json = await response.json()
+
+  return json
+}
+
+export const update = async ({
+  id,
+  title,
+  type,
+  description,
+  level,
+  auth,
+}: {
+  id: string
+  title: string
+  type: string
+  description: string
+  level: number
+  auth: Promise<string | null>
+}) => {
+  const response = await fetch(
+    '/api/v1/todo/' + id,
+    createOptions({
+      auth: await auth,
+      method: 'PUT',
+      body: { title, type, description, level },
+    })
   )
 
   if (!response.ok) {

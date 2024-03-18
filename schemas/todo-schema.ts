@@ -6,7 +6,7 @@ export const TodoSchema = z.object({
   title: z.string().max(60, { message: '' }),
   description: z.string(),
   dateCreated: z.string(),
-  dateFinished: z.string(),
-  level: z.number().gte(1).lte(3), //complexity level: 1, 2, 3
-  isFinished: z.boolean(),
+  dateFinished: z.string().nullable(),
+  level: z.number().gte(1).lte(3),
+  isFinished: z.boolean().nullable(),
 })

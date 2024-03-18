@@ -20,7 +20,7 @@ export default function NoteList() {
   if (isLoading) {
     return <div>Loading...</div>
   }
-  console.log(data)
+
   return (
     <div className="flex gap-5 flex-wrap">
       {data?.map(({ _id, title }) => (
