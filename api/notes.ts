@@ -4,7 +4,7 @@ import { z } from 'zod'
 
 export const getAll = async ({ auth }: { auth: Promise<string | null> }) => {
   const response = await fetch(
-    '/api/v1/notes',
+    process.env.NEXT_PUBLIC_API_URL + '/v1/notes',
     createOptions({ auth: await auth })
   )
 
@@ -24,7 +24,7 @@ export const getNote = async ({
   auth: Promise<string | null>
 }) => {
   const response = await fetch(
-    '/api/v1/notes/' + id,
+    process.env.NEXT_PUBLIC_API_URL + '/v1/notes/' + id,
     createOptions({ auth: await auth })
   )
 
@@ -47,7 +47,7 @@ export const updateNote = async ({
   auth: Promise<string | null>
 }) => {
   const response = await fetch(
-    '/api/v1/notes/' + id + '/text',
+    process.env.NEXT_PUBLIC_API_URL + '/v1/notes/' + id + '/text',
     createOptions({ auth: await auth, method: 'PUT', body: { text } })
   )
 
@@ -70,7 +70,7 @@ export const updateTitle = async ({
   auth: Promise<string | null>
 }) => {
   const response = await fetch(
-    '/api/v1/notes/' + id + '/title',
+    process.env.NEXT_PUBLIC_API_URL + '/v1/notes/' + id + '/title',
     createOptions({ auth: await auth, method: 'PUT', body: { title } })
   )
 
@@ -91,7 +91,7 @@ export const remove = async ({
   auth: Promise<string | null>
 }) => {
   const response = await fetch(
-    '/api/v1/notes/' + id,
+    process.env.NEXT_PUBLIC_API_URL + '/v1/notes/' + id,
     createOptions({ auth: await auth, method: 'DELETE' })
   )
 
@@ -106,7 +106,7 @@ export const remove = async ({
 
 export const create = async ({ auth }: { auth: Promise<string | null> }) => {
   const response = await fetch(
-    '/api/v1/notes/',
+    process.env.NEXT_PUBLIC_API_URL + '/v1/notes/',
     createOptions({ auth: await auth, method: 'POST' })
   )
 
