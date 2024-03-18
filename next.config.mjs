@@ -7,7 +7,7 @@ const nextConfig = {
         source: '/api/:path*',
         destination:
           process.env.NODE_ENV === 'production'
-            ? 'https://api.kelvymmiranda.com.br/:path*'
+            ? 'https://api.kelvymmiranda.com/:path*'
             : 'http://localhost:4000/:path*',
       },
     ]
